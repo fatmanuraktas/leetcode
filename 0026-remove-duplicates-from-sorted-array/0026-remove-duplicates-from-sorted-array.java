@@ -1,26 +1,21 @@
 class Solution {
     public int removeDuplicates(int[] nums) {
         
-        // Edge case: if the array is empty, return 0
-        if (nums == null || nums.length == 0) {
-            return 0;
-        }
+       final int n = nums.length;
+        if (n < 2) return n; // If 0 or 1 element, it's already unique
 
-        // Initialize the slow pointer
         int slow = 0;
-
-        // Iterate with the fast pointer starting from the second element
-        for (int fast = 1; fast < nums.length; fast++) {
-            // If the current element is different from the last unique element found
+        // Using a 'final' limit and starting from 1 to avoid redundant checks
+        for (int fast = 1; fast < n; fast++) {
             if (nums[fast] != nums[slow]) {
-                // Move the slow pointer forward
                 slow++;
-                // Update the position with the new unique element
-                nums[slow] = nums[fast];
+                // Only write if the pointers are actually different
+                // to avoid unnecessary memory bus traffic
+                if (slow != fast) {
+                    nums[slow] = nums[fast];
+                }
             }
         }
-
-        // The number of unique elements is slow + 1 (since index is 0-based)
         return slow + 1;
     }
 
